@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14
+    container_name: heydevs_quiz-postgres-1
+    restart: always
+    environment:
+      POSTGRES_USER: heydevs_quiz
+      POSTGRES_PASSWORD: heydevs_quiz
+      POSTGRES_DB: heydevs_quiz
+    volumes:
+      - ./ostgres_volume_dev:/var/lib/postgresql/data
+    ports:
+      - '6001:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: heydevs_quiz-app
+    restart: always
+    ports:
+      - 1337:1337
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: heydevs_quiz
+      DATABASE_USERNAME: heydevs_quiz
+      DATABASE_PASSWORD: heydevs_quiz
