@@ -16,6 +16,7 @@ export default {
       position,
       level,
       language,
+      include_open_questions,
     } = data;
 
     // Generate AI generated content and format it
@@ -26,6 +27,7 @@ export default {
         position,
         level,
         language,
+        includeOpenQuestions: include_open_questions ? true : false,
       });
 
     // Create quiz questions

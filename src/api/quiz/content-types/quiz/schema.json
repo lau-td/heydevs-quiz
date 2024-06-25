@@ -74,6 +74,10 @@
       ],
       "default": "EN",
       "required": true
+    },
+    "include_open_questions": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

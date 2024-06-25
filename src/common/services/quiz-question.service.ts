@@ -17,7 +17,8 @@ const generatePrompt = (
   questionsNumber: number,
   tags: string,
   position: string,
-  level: string
+  level: string,
+  includeOpenQuestions: boolean = false
 ): string => {
   let prompt = "";
 
@@ -25,20 +26,28 @@ const generatePrompt = (
     case Language.VN:
       prompt = `Tiến hành tạo chính xác ${questionsNumber} câu hỏi và câu trả lời trắc nghiệm cho ${tags},
       dành cho ${position} với mức độ chuyên môn là ${level}, 
-      - nội dung trả về là tiếng việt,  
-      - chỉ file csv, không thêm bất kì nội dung nào khác:
-      - không có câu trả lời nào là tất cả các ý trên đều đúng
-      - đầu ra dưới dạng tệp CSV như sau ${QUESTION_SCHEMA_CSV}`;
+      - nội dung trả về là tiếng việt.
+      - chỉ file csv, không thêm bất kì nội dung nào khác.
+      - không có câu trả lời nào là tất cả các ý trên đều đúng.
+      - đầu ra dưới dạng tệp CSV như sau ${QUESTION_SCHEMA_CSV}.
+      - bao gồm các tiêu đề như định dạng csv ở trên trong kết quả trả về.
+      `;
       break;
 
     case Language.EN:
     default:
       prompt = `Generate exactly ${questionsNumber} multiple choice quiz questions and answers for ${tags}, 
       targeting ${position} with a ${level} level of expertise
-      - returned content is in English
-      - just a CSV file, don't add any other content
+      - returned content is in English.
+      - just a CSV file, don't add any other content.
       - no answer is all above the following are correct.
-      - output in CSV file format like this ${QUESTION_SCHEMA_CSV}`;
+      - output in CSV file format like this ${QUESTION_SCHEMA_CSV}.
+      - includes headers like above csv format in the output.
+      `;
+
+      if (includeOpenQuestions) {
+        prompt += " - include open-ended questions.";
+      }
       break;
   }
 
@@ -58,16 +67,25 @@ export class QuizQuestionService {
     position: string;
     level: string;
     language: Language;
+    includeOpenQuestions?: boolean;
   }): Promise<QuizQuestion[]> {
     try {
       // Get input for AI generated content
-      const { questionsNumber, tags, position, level, language } = params;
+      const {
+        questionsNumber,
+        tags,
+        position,
+        level,
+        language,
+        includeOpenQuestions,
+      } = params;
       const prompt: string = generatePrompt(
         language,
         questionsNumber,
         tags,
         position,
-        level
+        level,
+        includeOpenQuestions
       );
 
       // Get AI generated content
@@ -77,6 +95,7 @@ export class QuizQuestionService {
 
       // Convert AI generated content to JSON
       const rawCsvAiContent: string = removeCsvBlock(aiGenerateContent);
+
       const rawQuestionsFromCsv: QuizQuestionAiGeneratedCsvDto[] =
         plainToInstance(
           QuizQuestionAiGeneratedCsvDto,
@@ -93,7 +112,9 @@ export class QuizQuestionService {
           answer_4,
           correct_answer,
         }) => ({
-          type: "multiple_choice",
+          type: params.includeOpenQuestions
+            ? "open_question"
+            : "multiple_choice",
           score: parseInt(score.toString()),
           content: question,
           answers: [answer_1, answer_2, answer_3, answer_4]

@@ -839,6 +839,7 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
     language: Attribute.Enumeration<['EN', 'VN']> &
       Attribute.Required &
       Attribute.DefaultTo<'EN'>;
+    include_open_questions: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
@@ -880,6 +881,8 @@ export interface ApiQuizQuestionQuizQuestion extends Schema.CollectionType {
       'oneToMany',
       'api::quiz-question-answer.quiz-question-answer'
     >;
+    type: Attribute.Enumeration<['multiple_choice', 'open_question']> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

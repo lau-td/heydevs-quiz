@@ -33,6 +33,14 @@
       "relation": "oneToMany",
       "target": "api::quiz-question-answer.quiz-question-answer",
       "mappedBy": "question"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "multiple_choice",
+        "open_question"
+      ],
+      "required": true
     }
   }
 }

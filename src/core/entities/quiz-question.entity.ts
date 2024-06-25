@@ -12,7 +12,7 @@ export class QuizQuestion extends Base {
   score: number;
 
   @Expose()
-  type: "multiple_choice" | "true_or_false";
+  type: "multiple_choice" | "true_or_false" | "open_question";
 
   @Expose()
   @Type(() => Quiz)

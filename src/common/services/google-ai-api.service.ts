@@ -23,6 +23,23 @@ export class GoogleAiApiService {
       generationConfig: {
         maxOutputTokens: 8192,
       },
+      systemInstruction: {
+        parts: [
+          {
+            text: "You are a quiz generator. ",
+          },
+          {
+            text: "Your goal is to create engaging quizzes that challenge and educate users.",
+          },
+          {
+            text: "You should craft questions that cover many aspect of the topic.",
+          },
+          {
+            text: "Ensure each quiz is informative, fostering curiosity and learning.",
+          },
+        ],
+        role: "generator",
+      },
     };
 
     try {

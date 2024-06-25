@@ -12,6 +12,9 @@ export class QuizQuestionAiGeneratedCsvDto {
   score: number;
 
   @Expose()
+  type: "multiple_choice" | "true_or_false" | "open_question";
+
+  @Expose()
   answer_1: string;
 
   @Expose()
