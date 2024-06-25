@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quiz_question_answers",
+  "info": {
+    "singularName": "quiz-question-answer",
+    "pluralName": "quiz-question-answers",
+    "displayName": "Quiz Question Answer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "correct": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "content": {
+      "type": "string",
+      "required": true
+    },
+    "question": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::quiz-question.quiz-question",
+      "inversedBy": "answers"
+    }
+  }
+}

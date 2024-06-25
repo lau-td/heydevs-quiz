@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quizzes",
+  "info": {
+    "singularName": "quiz",
+    "pluralName": "quizzes",
+    "displayName": "Quiz",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "total_score": {
+      "type": "integer",
+      "default": 0
+    },
+    "tags": {
+      "type": "string",
+      "required": true
+    },
+    "questions_number": {
+      "type": "integer",
+      "default": 10,
+      "min": 1,
+      "required": true,
+      "max": 50
+    },
+    "questions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::quiz-question.quiz-question",
+      "mappedBy": "quiz"
+    },
+    "quiz_takes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::quiz-take.quiz-take",
+      "mappedBy": "quiz"
+    },
+    "position": {
+      "type": "string",
+      "required": true
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "Intern",
+        "Junior",
+        "Middle",
+        "Senior"
+      ],
+      "required": true
+    },
+    "duration": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 600
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": [
+        "EN",
+        "VN"
+      ],
+      "default": "EN",
+      "required": true
+    }
+  }
+}

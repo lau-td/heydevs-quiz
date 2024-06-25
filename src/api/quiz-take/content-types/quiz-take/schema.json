@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quiz_takes",
+  "info": {
+    "singularName": "quiz-take",
+    "pluralName": "quiz-takes",
+    "displayName": "Quiz Take",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "candidate_email": {
+      "type": "string",
+      "required": true
+    },
+    "candidate_name": {
+      "type": "string",
+      "required": true
+    },
+    "started_at": {
+      "type": "datetime"
+    },
+    "finished_at": {
+      "type": "datetime"
+    },
+    "score": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "quiz": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::quiz.quiz",
+      "inversedBy": "quiz_takes"
+    },
+    "passCode": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "unique": true
+    },
+    "email_sent": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}
