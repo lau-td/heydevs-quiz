@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: heydevs_quiz
       POSTGRES_DB: heydevs_quiz
     volumes:
-      - ./ostgres_volume_dev:/var/lib/postgresql/data
+      - ./postgres_volume_dev:/var/lib/postgresql/data
     ports:
       - '6001:5432'
 
