@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tests",
+  "info": {
+    "singularName": "test",
+    "pluralName": "tests",
+    "displayName": "Test",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "content_url": {
+      "type": "string"
+    },
+    "content_file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "images"
+      ]
+    },
+    "take": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::test-take.test-take",
+      "mappedBy": "test"
+    },
+    "duration": {
+      "required": true,
+      "default": 86400,
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "test_takes",
+  "info": {
+    "singularName": "test-take",
+    "pluralName": "test-takes",
+    "displayName": "Test Take",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "candidate_name": {
+      "type": "string",
+      "required": true
+    },
+    "candidate_email": {
+      "type": "string",
+      "required": true
+    },
+    "result": {
+      "type": "string"
+    },
+    "test": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::test.test",
+      "inversedBy": "take"
+    },
+    "url": {
+      "type": "string"
+    },
+    "started_at": {
+      "type": "datetime"
+    },
+    "finished_at": {
+      "type": "datetime"
+    }
+  }
+}

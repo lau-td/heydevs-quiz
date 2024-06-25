@@ -1039,6 +1039,79 @@ export interface ApiTakeQuestionAnswerTakeQuestionAnswer
   };
 }
 
+export interface ApiTestTest extends Schema.CollectionType {
+  collectionName: 'tests';
+  info: {
+    singularName: 'test';
+    pluralName: 'tests';
+    displayName: 'Test';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    content_url: Attribute.String;
+    content_file: Attribute.Media<'files' | 'images'>;
+    take: Attribute.Relation<
+      'api::test.test',
+      'oneToOne',
+      'api::test-take.test-take'
+    >;
+    duration: Attribute.Integer &
+      Attribute.Required &
+      Attribute.DefaultTo<86400>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTestTakeTestTake extends Schema.CollectionType {
+  collectionName: 'test_takes';
+  info: {
+    singularName: 'test-take';
+    pluralName: 'test-takes';
+    displayName: 'Test Take';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    candidate_name: Attribute.String & Attribute.Required;
+    candidate_email: Attribute.String & Attribute.Required;
+    result: Attribute.String;
+    test: Attribute.Relation<
+      'api::test-take.test-take',
+      'oneToOne',
+      'api::test.test'
+    >;
+    url: Attribute.String;
+    started_at: Attribute.DateTime;
+    finished_at: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::test-take.test-take',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::test-take.test-take',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1062,6 +1135,8 @@ declare module '@strapi/types' {
       'api::quiz-question-answer.quiz-question-answer': ApiQuizQuestionAnswerQuizQuestionAnswer;
       'api::quiz-take.quiz-take': ApiQuizTakeQuizTake;
       'api::take-question-answer.take-question-answer': ApiTakeQuestionAnswerTakeQuestionAnswer;
+      'api::test.test': ApiTestTest;
+      'api::test-take.test-take': ApiTestTakeTestTake;
     }
   }
 }
