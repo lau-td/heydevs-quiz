@@ -49,6 +49,9 @@ export class QuizQuestionResponseDto {
   @Expose()
   @Type(() => QuizQuestionAnswerDto)
   answers: QuizQuestionAnswerDto[];
+
+  @Expose()
+  type: "multiple_choice" | "true_or_false" | "open_question";
 }
 
 @Exclude()

@@ -137,6 +137,7 @@ export default factories.createCoreService(
       data: {
         questionId: number;
         answerId: number;
+        answerText: string;
       }[]
     ) {
       try {
@@ -194,6 +195,30 @@ export default factories.createCoreService(
           }
         }
 
+        // Update take question answer
+        await Promise.all(
+          data.map(({ questionId, answerId, answerText }) =>
+            strapi.entityService.create(
+              "api::take-question-answer.take-question-answer",
+              answerId
+                ? {
+                    data: {
+                      take: { id: quizTakeId },
+                      question: { id: questionId },
+                      answer: { id: answerId },
+                    },
+                  }
+                : {
+                    data: {
+                      take: { id: quizTakeId },
+                      question: { id: questionId },
+                      content: answerText,
+                    },
+                  }
+            )
+          )
+        );
+
         // Update quiz take
         await strapi.entityService.update(
           "api::quiz-take.quiz-take",
@@ -204,22 +229,6 @@ export default factories.createCoreService(
               score: quizTake.score,
             },
           }
-        );
-
-        // Update take question answer
-        await Promise.all(
-          data.map(({ questionId, answerId }) =>
-            strapi.entityService.create(
-              "api::take-question-answer.take-question-answer",
-              {
-                data: {
-                  take: { id: quizTakeId },
-                  question: { id: questionId },
-                  answer: { id: answerId },
-                },
-              }
-            )
-          )
         );
 
         const updatedQuizTake = await strapi.entityService.findOne(

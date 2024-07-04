@@ -1002,7 +1002,7 @@ export interface ApiTakeQuestionAnswerTakeQuestionAnswer
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     question: Attribute.Relation<
@@ -1023,7 +1023,6 @@ export interface ApiTakeQuestionAnswerTakeQuestionAnswer
     content: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::take-question-answer.take-question-answer',
       'oneToOne',

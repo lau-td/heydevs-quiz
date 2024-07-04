@@ -73,8 +73,8 @@ export default {
     const quizTakeDetails = takeQuestionAnswers.map(({ question, answer }) => {
       return {
         questionContent: question.content,
-        answerContent: answer.content,
-        correct: answer.correct,
+        answerContent: answer?.content || "",
+        correct: answer?.correct || "",
         correctAnswerContent: questionIdAndCorrectAnswerContentMap[question.id],
       };
     });

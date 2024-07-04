@@ -46,7 +46,8 @@ const generatePrompt = (
       `;
 
       if (includeOpenQuestions) {
-        prompt += " - include open-ended questions.";
+        prompt +=
+          " - includes open questions like above csv format in the output.";
       }
       break;
   }
@@ -110,11 +111,10 @@ export class QuizQuestionService {
           answer_2,
           answer_3,
           answer_4,
+          type,
           correct_answer,
         }) => ({
-          type: params.includeOpenQuestions
-            ? "open_question"
-            : "multiple_choice",
+          type,
           score: parseInt(score.toString()),
           content: question,
           answers: [answer_1, answer_2, answer_3, answer_4]
