@@ -17,6 +17,9 @@ RUN chmod +x ./script.sh
 
 RUN ./script.sh
 
+# Add google-sheet-service-account.json 
+COPY ./google-sheet-service-account.json ./
+
 # Expose the default Strapi port (1337)
 EXPOSE 1337
 
