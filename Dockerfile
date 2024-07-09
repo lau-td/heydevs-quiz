@@ -13,6 +13,10 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
+RUN chmod +x ./script.sh
+
+RUN ./script.sh
+
 # Expose the default Strapi port (1337)
 EXPOSE 1337
 

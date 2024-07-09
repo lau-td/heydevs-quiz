@@ -6,5 +6,10 @@ export default {
       path: "/quizzes/findAndGetFull",
       handler: "api::quiz.quiz.findAndGetFull",
     },
+    {
+      method: "POST",
+      path: "/quizzes/create-from-google-sheet",
+      handler: "api::quiz.quiz.createQuizFromGoogleSheet",
+    },
   ],
 };

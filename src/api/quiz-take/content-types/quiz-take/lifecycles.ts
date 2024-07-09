@@ -70,14 +70,18 @@ export default {
 
     const questionNumber: number = quizTake.quiz?.questions_number || 0;
     const correctAnswerNumber: number = quizTake?.score || 0;
-    const quizTakeDetails = takeQuestionAnswers.map(({ question, answer }) => {
-      return {
-        questionContent: question.content,
-        answerContent: answer?.content || "",
-        correct: answer?.correct || "",
-        correctAnswerContent: questionIdAndCorrectAnswerContentMap[question.id],
-      };
-    });
+    const quizTakeDetails = takeQuestionAnswers.map(
+      ({ question, answer, content }) => {
+        return {
+          type: question.type,
+          questionContent: question.content,
+          answerContent: answer?.content || content || "",
+          correct: answer?.correct || "",
+          correctAnswerContent:
+            questionIdAndCorrectAnswerContentMap[question.id],
+        };
+      }
+    );
 
     const candidateName: string = quizTake?.candidate_name || "";
     const createdByEmail: string = quizTake?.createdBy?.email || "";
@@ -102,11 +106,18 @@ export default {
             .map(
               (detail, index) => `
             ${index}: ${detail.questionContent}
-            => ${detail.answerContent} ${detail.correct ? "✅" : "❌"}
+
+            ${
+              detail.type === "multiple_choice"
+                ? `=> ${detail.answerContent} ${detail.correct ? "✅" : "❌"}
             ${
               !detail.correct
                 ? `=> Correct Answer: ${detail.correctAnswerContent} ✅`
                 : ""
+            }`
+                : `
+            => Answer: ${detail.answerContent}
+              `
             }
             `
             )
