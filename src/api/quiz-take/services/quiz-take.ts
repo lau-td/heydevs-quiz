@@ -44,10 +44,7 @@ export default factories.createCoreService(
         }
 
         if (quizTake.passCode !== passCode) {
-          return {
-            status: false,
-            message: "Pass code is incorrect",
-          };
+          throw new errors.ApplicationError("Pass code is incorrect");
         }
 
         return {
@@ -75,10 +72,7 @@ export default factories.createCoreService(
         }
 
         if (quizTake.passCode !== passCode) {
-          return {
-            status: false,
-            message: "Pass code is incorrect",
-          };
+          throw new errors.ApplicationError("Pass code is incorrect");
         }
 
         if (quizTake.finished_at) {
