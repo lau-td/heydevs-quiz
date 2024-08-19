@@ -10,14 +10,22 @@ export default {
 
   async afterCreate(event) {
     const { result } = event;
+    const quizTakeId: number = result.id;
 
     // Update url
-    const url = `${process.env.FRONT_END_URL}/quiz-takes/${result.id}`;
-    await strapi.entityService.update("api::quiz-take.quiz-take", result.id, {
+    const url = `${process.env.FRONT_END_URL}/quiz-takes/${quizTakeId}`;
+    await strapi.entityService.update("api::quiz-take.quiz-take", quizTakeId, {
       data: {
         url,
       },
     });
+
+    // Send candidate invitation email
+    if (result.send_candidate_invitation_email) {
+      await strapi.services[
+        "api::quiz-take.quiz-take"
+      ].sendCandidateInvitationEmail(quizTakeId);
+    }
   },
 
   async afterUpdate(event) {

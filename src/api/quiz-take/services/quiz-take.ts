@@ -235,5 +235,39 @@ export default factories.createCoreService(
         throw error;
       }
     },
+
+    async sendCandidateInvitationEmail(quizTakeId: number) {
+      const quizTake = await strapi.entityService.findOne(
+        "api::quiz-take.quiz-take",
+        quizTakeId,
+        {
+          populate: ["quiz", "createdBy"],
+        }
+      );
+
+      const candidateEmail: string = quizTake.candidate_email;
+      const quizTakePassCode: string = quizTake.passCode;
+      const quizTakeUrl: string = quizTake.url;
+      const candidateName: string = quizTake.candidate_name;
+      const positionName: string = quizTake.quiz.position;
+
+      await strapi.plugin("email-designer").service("email").sendTemplatedEmail(
+        {
+          // required
+          to: candidateEmail,
+        },
+        {
+          // required - Ref ID defined in the template designer (won't change on import)
+          templateReferenceId: 1,
+        },
+        {
+          // this object must include all variables you're using in your email template
+          candidateName,
+          quizTakeUrl,
+          quizTakePassCode,
+          positionName,
+        }
+      );
+    },
   })
 );
