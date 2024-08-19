@@ -13,7 +13,7 @@ export default {
     const quizTakeId: number = result.id;
 
     // Update url
-    const url = `${process.env.FRONT_END_URL}/quiz-takes/${quizTakeId}`;
+    const url = `${process.env.FRONT_END_URL}/${result.id}`;
     await strapi.entityService.update("api::quiz-take.quiz-take", quizTakeId, {
       data: {
         url,
